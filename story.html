@@ -199,14 +199,23 @@
 
 
           ${
-            s.cover
-              ? `
-                <div class="cover large ${s.cover}">
-                  <span>${s.number}</span>
-                </div>
-              `
-              : ""
-          }
+  s.cover
+    ? (
+        s.cover.startsWith("/")
+          ? `
+            <div class="cover large image-cover">
+              <img src="${s.cover}" alt="${s.title}">
+              <span>${s.number}</span>
+            </div>
+          `
+          : `
+            <div class="cover large ${s.cover}">
+              <span>${s.number}</span>
+            </div>
+          `
+      )
+    : ""
+}
 
         </div>
 
