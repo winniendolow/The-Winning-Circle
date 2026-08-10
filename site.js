@@ -1,0 +1,3 @@
+function subscribe(e){e.preventDefault();const form=e.target;const msg=form.querySelector('small');msg.textContent='Thanks — you’re on the list!';form.reset();}
+document.querySelector('.menu')?.addEventListener('click',()=>{const n=document.querySelector('nav');n.classList.toggle('open')});
+if(document.getElementById('latest')){document.getElementById('latest').innerHTML=STORIES.slice(0,3).map(s=>`<article class="card"><a href="story.html?id=${s.id}"><div class="cover ${s.cover}"><span>${s.number}</span></div></a><div class="cardbody"><p class="tag">${s.category}</p><h2>${s.title}</h2><p>${s.excerpt}</p><small>By ${s.author} · ${s.date}</small><a class="read" href="story.html?id=${s.id}">Read story →</a></div></article>`).join('')}
