@@ -8,5 +8,8 @@
 const params=new URLSearchParams(location.search); document.getElementById('category').value=params.get('category')||'';
 function render(){let q=document.getElementById('search').value.toLowerCase(), c=document.getElementById('category').value; let data=STORIES.filter(s=>(!c||s.category===c)&&(!q||(s.title+s.author+s.excerpt).toLowerCase().includes(q))); document.getElementById('results').innerHTML=data.length?data.map(card).join(''):'<div class="empty">No stories found. Try another search.</div>'}
 function card(s){return `<article class="card"><a href="story.html?id=${s.id}"><div class="cover ${s.cover}"><span>${s.number}</span></div></a><div class="cardbody"><p class="tag">${s.category}</p><h2>${s.title}</h2><p>${s.excerpt}</p><small>By ${s.author} · ${s.date}</small><a class="read" href="story.html?id=${s.id}">Read story →</a></div></article>`}
-document.getElementById('search').addEventListener('input',render);document.getElementById('category').addEventListener('change',render);render();
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('category').addEventListener('change', render);
+
+STORIES_READY.then(render);
 </script></body></html>
