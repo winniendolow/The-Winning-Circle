@@ -1,74 +1,616 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stories | The Winning Circle</title><link rel="stylesheet" href="style.css"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"></head>
-<body><header><div class="container nav"><a class="logo" href="index.html">The <span>Winning</span> Circle</a><button class="menu">☰</button><nav><a href="index.html">Home</a><a href="stories.html">Stories</a><a href="about.html">About</a></nav><div class="social"><a href="#">IG</a><a href="#">YT</a><a href="#">TT</a></div></div></header>
-<main><section class="pagehero"><div class="container"><p class="eyebrow">THE STORY LIBRARY</p><h1>Find a story for this moment.</h1><p>Search by title, author or browse by category.</p><div class="searchrow"><input id="search" placeholder="Search stories…"><select id="category"><option value="">All categories</option><option>Real Stories</option><option>Fiction</option><option>Inspiration</option><option>Reflections</option></select></div></div></section>
-<section class="section"><div class="container"><div id="results" class="cards"></div></div></section></main>
-<footer><div class="container footer"><div><a class="logo light" href="index.html">The <span>Winning</span> Circle</a><p>Stories that entertain. Stories that inspire.</p></div><div><b>Follow</b><p><a href="#">Instagram</a> · <a href="#">YouTube</a> · <a href="#">TikTok</a></p></div></div></footer>
-<script src="stories.js"></script><script>
-const params=new URLSearchParams(location.search); document.getElementById('category').value=params.get('category')||'';
-function render(){let q=document.getElementById('search').value.toLowerCase(), c=document.getElementById('category').value; let data=STORIES.filter(s=>(!c||s.category===c)&&(!q||(s.title+s.author+s.excerpt).toLowerCase().includes(q))); document.getElementById('results').innerHTML=data.length?data.map(card).join(''):'<div class="empty">No stories found. Try another search.</div>'}
-function card(s){return `<article class="card"><a href="story.html?id=${s.id}">function card(s) {
+<!DOCTYPE html>
+<html lang="en">
 
-  const coverHTML = s.cover
-    ? (
-        s.cover.startsWith("/")
-          ? `
-            <div class="cover image-cover">
-              <img src="${s.cover}" alt="${s.title}" loading="lazy">
-              <span>${s.number}</span>
-            </div>
-          `
-          : `
-            <div class="cover ${s.cover}">
-              <span>${s.number}</span>
-            </div>
-          `
-      )
-    : `
-        <div class="cover">
-          <span>${s.number}</span>
-        </div>
-      `;
+<head>
 
-  return `
-    <article class="card">
+  <meta charset="UTF-8">
 
-      <a href="story.html?id=${s.id}">
-        ${coverHTML}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Stories | The Winning Circle</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header>
+
+    <div class="container nav">
+
+      <a
+        class="logo"
+        href="index.html"
+      >
+        The <span>Winning</span> Circle
       </a>
 
-      <div class="cardbody">
 
-        <p class="tag">
-          ${s.category}
-        </p>
+      <button class="menu">
+        ☰
+      </button>
 
-        <h2>
-          ${s.title}
-        </h2>
 
-        <p>
-          ${s.excerpt}
-        </p>
+      <nav>
 
-        <small>
-          By ${s.author} · ${s.date}
-        </small>
+        <a href="index.html">
+          Home
+        </a>
 
-        <a
-          class="read"
-          href="story.html?id=${s.id}"
-        >
-          Read story →
+        <a href="stories.html">
+          Stories
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+      </nav>
+
+
+      <div class="social">
+
+        <a href="#">
+          IG
+        </a>
+
+        <a href="#">
+          YT
+        </a>
+
+        <a href="#">
+          TT
         </a>
 
       </div>
 
-    </article>
-  `;
-}</a><div class="cardbody"><p class="tag">${s.category}</p><h2>${s.title}</h2><p>${s.excerpt}</p><small>By ${s.author} · ${s.date}</small><a class="read" href="story.html?id=${s.id}">Read story →</a></div></article>`}
-document.getElementById('search').addEventListener('input', render);
-document.getElementById('category').addEventListener('change', render);
+    </div>
 
-STORIES_READY.then(render);
-</script></body></html>
+  </header>
+
+
+
+  <!-- =========================
+       PAGE HERO
+  ========================== -->
+
+  <main>
+
+    <section class="pagehero">
+
+      <div class="container">
+
+        <p class="eyebrow">
+          THE STORY LIBRARY
+        </p>
+
+
+        <h1>
+          Find a story for this moment.
+        </h1>
+
+
+        <p>
+          Search by title, author or browse by category.
+        </p>
+
+
+        <div class="searchrow">
+
+          <input
+            id="search"
+            type="search"
+            placeholder="Search stories…"
+          >
+
+
+          <select id="category">
+
+            <option value="">
+              All categories
+            </option>
+
+            <option value="Real Stories">
+              Real Stories
+            </option>
+
+            <option value="Fiction">
+              Fiction
+            </option>
+
+            <option value="Inspiration">
+              Inspiration
+            </option>
+
+            <option value="Reflections">
+              Reflections
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         STORIES
+    ========================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div
+          id="results"
+          class="cards"
+        ></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="container footer">
+
+
+      <div>
+
+        <a
+          class="logo light"
+          href="index.html"
+        >
+          The <span>Winning</span> Circle
+        </a>
+
+
+        <p>
+          Stories that entertain.
+          Stories that inspire.
+        </p>
+
+      </div>
+
+
+
+      <div>
+
+        <b>
+          Follow
+        </b>
+
+
+        <p>
+
+          <a href="#">
+            Instagram
+          </a>
+
+          ·
+
+          <a href="#">
+            YouTube
+          </a>
+
+          ·
+
+          <a href="#">
+            TikTok
+          </a>
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================
+       STORIES DATA
+  ========================== -->
+
+  <script src="stories.js"></script>
+
+
+
+  <!-- =========================
+       PAGE SCRIPT
+  ========================== -->
+
+  <script>
+
+
+    /*
+     * Read category from the URL.
+     *
+     * Example:
+     *
+     * stories.html?category=Fiction
+     */
+
+    const params =
+      new URLSearchParams(location.search);
+
+
+    const categorySelect =
+      document.getElementById("category");
+
+
+    categorySelect.value =
+      params.get("category") || "";
+
+
+
+    /*
+     * Display stories.
+     */
+
+    function render() {
+
+
+      const searchInput =
+        document.getElementById("search");
+
+
+      const searchTerm =
+        searchInput.value
+          .toLowerCase()
+          .trim();
+
+
+      const selectedCategory =
+        categorySelect.value;
+
+
+
+      /*
+       * Filter stories.
+       */
+
+      const data =
+        STORIES.filter(story => {
+
+
+          const matchesCategory =
+            !selectedCategory ||
+            story.category === selectedCategory;
+
+
+          const searchableText =
+            (
+              story.title +
+              " " +
+              story.author +
+              " " +
+              story.excerpt +
+              " " +
+              story.category
+            ).toLowerCase();
+
+
+          const matchesSearch =
+            !searchTerm ||
+            searchableText.includes(searchTerm);
+
+
+          return (
+            matchesCategory &&
+            matchesSearch
+          );
+
+        });
+
+
+
+      /*
+       * Display the results.
+       */
+
+      const results =
+        document.getElementById("results");
+
+
+
+      if (!data.length) {
+
+        results.innerHTML = `
+          <div class="empty">
+
+            <h3>
+              No stories found.
+            </h3>
+
+            <p>
+              Try another search or category.
+            </p>
+
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+
+      /*
+       * Create story cards.
+       */
+
+      results.innerHTML =
+        data
+          .map(card)
+          .join("");
+
+    }
+
+
+
+    /*
+     * Create an individual story card.
+     */
+
+    function card(story) {
+
+
+      let coverHTML;
+
+
+
+      /*
+       * CMS uploaded image.
+       *
+       * Example:
+       * /images/uploads/my-cover.jpg
+       */
+
+      if (
+        story.cover &&
+        (
+          story.cover.startsWith("/") ||
+          story.cover.startsWith("http")
+        )
+      ) {
+
+        coverHTML = `
+
+          <div class="cover image-cover">
+
+            <img
+              src="${story.cover}"
+              alt="${story.title}"
+              loading="lazy"
+            >
+
+            <span>
+              ${story.number}
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      /*
+       * Existing website cover.
+       *
+       * Example:
+       * cover-one
+       */
+
+      else if (story.cover) {
+
+        coverHTML = `
+
+          <div class="cover ${story.cover}">
+
+            <span>
+              ${story.number}
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      /*
+       * No cover image.
+       */
+
+      else {
+
+        coverHTML = `
+
+          <div class="cover">
+
+            <span>
+              ${story.number}
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+
+      /*
+       * Return complete card.
+       */
+
+      return `
+
+        <article class="card">
+
+
+          <a
+            href="story.html?id=${story.id}"
+          >
+
+            ${coverHTML}
+
+          </a>
+
+
+
+          <div class="cardbody">
+
+
+            <p class="tag">
+              ${story.category}
+            </p>
+
+
+
+            <h2>
+              ${story.title}
+            </h2>
+
+
+
+            <p>
+              ${story.excerpt}
+            </p>
+
+
+
+            <small>
+              By ${story.author}
+              ·
+              ${story.date}
+            </small>
+
+
+
+            <a
+              class="read"
+              href="story.html?id=${story.id}"
+            >
+              Read story →
+            </a>
+
+
+          </div>
+
+
+        </article>
+
+      `;
+
+    }
+
+
+
+    /*
+     * Search.
+     */
+
+    document
+      .getElementById("search")
+      .addEventListener(
+        "input",
+        render
+      );
+
+
+
+    /*
+     * Category filter.
+     */
+
+    document
+      .getElementById("category")
+      .addEventListener(
+        "change",
+        render
+      );
+
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Render the original stories immediately.
+     *
+     * This means the page will not be blank
+     * while GitHub/CMS stories are loading.
+     */
+
+    render();
+
+
+
+    /*
+     * Then load the CMS stories.
+     *
+     * When stories.js finishes loading the
+     * stories from GitHub, render again.
+     */
+
+    if (
+      typeof STORIES_READY !== "undefined"
+    ) {
+
+      STORIES_READY
+        .then(() => {
+
+          render();
+
+        })
+        .catch(error => {
+
+          console.error(
+            "CMS stories could not be loaded:",
+            error
+          );
+
+        });
+
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
