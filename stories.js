@@ -321,9 +321,10 @@ async function loadCMSStories() {
           date:
             formatDate(data.date),
 
-          cover:
-            data.cover ||
-            "",
+        cover:
+  data.cover
+    ? data.cover.replace(/[\u200B-\u200D\uFEFF\u202A-\u202E]/g, "")
+    : "",
 
           excerpt:
             data.excerpt ||
