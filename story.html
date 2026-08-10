@@ -1,58 +1,259 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Story | The Winning Circle</title><link rel="stylesheet" href="style.css"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"></head>
-<body><header><div class="container nav"><a class="logo" href="index.html">The <span>Winning</span> Circle</a><button class="menu">☰</button><nav><a href="index.html">Home</a><a href="stories.html">Stories</a><a href="about.html">About</a></nav><div class="social"><a href="#">IG</a><a href="#">YT</a><a href="#">TT</a></div></div></header>
-<main><article id="article" class="article"></article><section class="newsletter"><div class="container newsletterbox"><div><p class="eyebrow">STAY IN THE CIRCLE</p><h2>More stories, occasionally.</h2><p>Join readers who like stories with heart.</p></div><form onsubmit="subscribe(event)"><input type="email" placeholder="Your email address" required><button class="btn">Subscribe</button><small id="message"></small></form></div></section></main>
-<footer><div class="container footer"><div><a class="logo light" href="index.html">The <span>Winning</span> Circle</a><p>Stories that entertain. Stories that inspire.</p></div><div><b>Follow</b><p><a href="#">Instagram</a> · <a href="#">YouTube</a> · <a href="#">TikTok</a></p></div></div></footer>
-<script src="stories.js"></script><script>
-<script>
-STORIES_READY.then(() => {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  const id = new URLSearchParams(location.search).get('id');
+  <title>Story | The Winning Circle</title>
 
-  const s = STORIES.find(x => x.id === id) || STORIES[0];
+  <link rel="stylesheet" href="style.css">
 
-  document.title = s.title + " | The Winning Circle";
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+</head>
 
-  document.getElementById("article").innerHTML = `
-    <div class="container articlehead">
+<body>
 
-      <p class="tag">${s.category}</p>
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
 
-      <h1>${s.title}</h1>
-
-      <p class="dek">${s.excerpt}</p>
-
-      <div class="byline">
-        By <b>${s.author}</b> · ${s.date}
-      </div>
-
-      ${
-        s.cover
-          ? `<div class="cover large ${s.cover}">
-              <span>${s.number}</span>
-             </div>`
-          : ""
-      }
-
-    </div>
-
-    <div class="container articlebody">
-
-      ${s.body}
-
-      <div class="share">
-        <b>Share this story</b>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-      <a class="read" href="stories.html">
-        ← Back to stories
+      <a class="logo" href="index.html">
+        The <span>Winning</span> Circle
       </a>
 
+      <button class="menu">☰</button>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="stories.html">Stories</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <div class="social">
+        <a href="#">IG</a>
+        <a href="#">YT</a>
+        <a href="#">TT</a>
+      </div>
+
     </div>
-  `;
-});
-</script>
-</script></body></html>
+  </header>
+
+
+  <!-- STORY -->
+  <main>
+
+    <article id="article" class="article">
+
+      <!-- Story content will be inserted here automatically -->
+
+    </article>
+
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+
+      <div class="container newsletterbox">
+
+        <div>
+
+          <p class="eyebrow">
+            STAY IN THE CIRCLE
+          </p>
+
+          <h2>
+            More stories, occasionally.
+          </h2>
+
+          <p>
+            Join readers who like stories with heart.
+          </p>
+
+        </div>
+
+
+        <form onsubmit="subscribe(event)">
+
+          <input
+            type="email"
+            placeholder="Your email address"
+            required
+          >
+
+          <button class="btn">
+            Subscribe
+          </button>
+
+          <small id="message"></small>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container footer">
+
+      <div>
+
+        <a class="logo light" href="index.html">
+          The <span>Winning</span> Circle
+        </a>
+
+        <p>
+          Stories that entertain. Stories that inspire.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <b>Follow</b>
+
+        <p>
+          <a href="#">Instagram</a>
+          ·
+          <a href="#">YouTube</a>
+          ·
+          <a href="#">TikTok</a>
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- LOAD STORIES -->
+  <script src="stories.js"></script>
+
+
+  <!-- DISPLAY SELECTED STORY -->
+  <script>
+
+    STORIES_READY.then(() => {
+
+      /*
+       * Get the story ID from the URL.
+       *
+       * Example:
+       * story.html?id=my-first-story
+       */
+
+      const id =
+        new URLSearchParams(location.search).get("id");
+
+
+      /*
+       * Find the requested story.
+       */
+
+      const s =
+        STORIES.find(x => x.id === id) || STORIES[0];
+
+
+      /*
+       * Update the browser title.
+       */
+
+      document.title =
+        s.title + " | The Winning Circle";
+
+
+      /*
+       * Display the story.
+       */
+
+      document.getElementById("article").innerHTML = `
+
+        <div class="container articlehead">
+
+          <p class="tag">
+            ${s.category}
+          </p>
+
+
+          <h1>
+            ${s.title}
+          </h1>
+
+
+          <p class="dek">
+            ${s.excerpt}
+          </p>
+
+
+          <div class="byline">
+            By <b>${s.author}</b> · ${s.date}
+          </div>
+
+
+          ${
+            s.cover
+              ? `
+                <div class="cover large ${s.cover}">
+                  <span>${s.number}</span>
+                </div>
+              `
+              : ""
+          }
+
+        </div>
+
+
+        <div class="container articlebody">
+
+          ${s.body}
+
+
+          <div class="share">
+
+            <b>
+              Share this story
+            </b>
+
+            <a href="#">
+              Instagram
+            </a>
+
+            <a href="#">
+              Facebook
+            </a>
+
+            <a href="#">
+              WhatsApp
+            </a>
+
+          </div>
+
+
+          <a class="read" href="stories.html">
+            ← Back to stories
+          </a>
+
+        </div>
+
+      `;
+
+    });
+
+  </script>
+
+
+</body>
+</html>
+
+ 
+     
+
+    
