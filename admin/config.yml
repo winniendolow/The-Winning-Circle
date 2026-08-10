@@ -45,4 +45,4 @@ collections:
 
       - label: "Story"
         name: "body"
-        widget: "markdown"
+        widget: "markdown"  
