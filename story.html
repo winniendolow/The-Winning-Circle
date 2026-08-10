@@ -4,7 +4,55 @@
 <main><article id="article" class="article"></article><section class="newsletter"><div class="container newsletterbox"><div><p class="eyebrow">STAY IN THE CIRCLE</p><h2>More stories, occasionally.</h2><p>Join readers who like stories with heart.</p></div><form onsubmit="subscribe(event)"><input type="email" placeholder="Your email address" required><button class="btn">Subscribe</button><small id="message"></small></form></div></section></main>
 <footer><div class="container footer"><div><a class="logo light" href="index.html">The <span>Winning</span> Circle</a><p>Stories that entertain. Stories that inspire.</p></div><div><b>Follow</b><p><a href="#">Instagram</a> · <a href="#">YouTube</a> · <a href="#">TikTok</a></p></div></div></footer>
 <script src="stories.js"></script><script>
-const id=new URLSearchParams(location.search).get('id');const s=STORIES.find(x=>x.id===id)||STORIES[0];
-document.title=s.title+' | The Winning Circle';
-document.getElementById('article').innerHTML=`<div class="container articlehead"><p class="tag">${s.category}</p><h1>${s.title}</h1><p class="dek">${s.excerpt}</p><div class="byline">By <b>${s.author}</b> · ${s.date}</div><div class="cover large ${s.cover}"><span>${s.number}</span></div></div><div class="container articlebody">${s.body}<div class="share"><b>Share this story</b><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a></div><a class="read" href="stories.html">← Back to stories</a></div>`;
+<script>
+STORIES_READY.then(() => {
+
+  const id = new URLSearchParams(location.search).get('id');
+
+  const s = STORIES.find(x => x.id === id) || STORIES[0];
+
+  document.title = s.title + " | The Winning Circle";
+
+  document.getElementById("article").innerHTML = `
+    <div class="container articlehead">
+
+      <p class="tag">${s.category}</p>
+
+      <h1>${s.title}</h1>
+
+      <p class="dek">${s.excerpt}</p>
+
+      <div class="byline">
+        By <b>${s.author}</b> · ${s.date}
+      </div>
+
+      ${
+        s.cover
+          ? `<div class="cover large ${s.cover}">
+              <span>${s.number}</span>
+             </div>`
+          : ""
+      }
+
+    </div>
+
+    <div class="container articlebody">
+
+      ${s.body}
+
+      <div class="share">
+        <b>Share this story</b>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">WhatsApp</a>
+      </div>
+
+      <a class="read" href="stories.html">
+        ← Back to stories
+      </a>
+
+    </div>
+  `;
+});
+</script>
 </script></body></html>
