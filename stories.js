@@ -155,9 +155,7 @@ async function loadCMSStories() {
                 day: "numeric"
               })
             : "",
-          cover: data.cover
-            ? data.cover.replace(/^\//, "")
-            : "",
+          cover: data.cover || "",
           excerpt: data.excerpt || "",
           body: markdownToHTML(parsed.body)
         };
