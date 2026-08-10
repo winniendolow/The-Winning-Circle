@@ -1,94 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Story | The Winning Circle</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
 
-  <link rel="stylesheet" href="style.css">
+  <title>Stories | The Winning Circle</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
     rel="stylesheet"
   >
+
 </head>
+
 
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
   <header>
+
     <div class="container nav">
 
-      <a class="logo" href="index.html">
+      <a
+        class="logo"
+        href="index.html"
+      >
         The <span>Winning</span> Circle
       </a>
 
-      <button class="menu">☰</button>
+
+      <button class="menu">
+        ☰
+      </button>
+
 
       <nav>
-        <a href="index.html">Home</a>
-        <a href="stories.html">Stories</a>
-        <a href="about.html">About</a>
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="stories.html">
+          Stories
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
       </nav>
 
+
       <div class="social">
-        <a href="#">IG</a>
-        <a href="#">YT</a>
-        <a href="#">TT</a>
+
+        <a href="#">
+          IG
+        </a>
+
+        <a href="#">
+          YT
+        </a>
+
+        <a href="#">
+          TT
+        </a>
+
       </div>
 
     </div>
+
   </header>
 
 
-  <!-- STORY -->
+
+  <!-- =========================
+       PAGE HERO
+  ========================== -->
+
   <main>
 
-    <article id="article" class="article">
+    <section class="pagehero">
 
-      <!-- Story content will be inserted here automatically -->
+      <div class="container">
 
-    </article>
+        <p class="eyebrow">
+          THE STORY LIBRARY
+        </p>
 
 
-    <!-- NEWSLETTER -->
-    <section class="newsletter">
+        <h1>
+          Find a story for this moment.
+        </h1>
 
-      <div class="container newsletterbox">
 
-        <div>
+        <p>
+          Search by title, author or browse by category.
+        </p>
 
-          <p class="eyebrow">
-            STAY IN THE CIRCLE
-          </p>
 
-          <h2>
-            More stories, occasionally.
-          </h2>
+        <div class="searchrow">
 
-          <p>
-            Join readers who like stories with heart.
-          </p>
+          <input
+            id="search"
+            type="search"
+            placeholder="Search stories…"
+          >
+
+
+          <select id="category">
+
+            <option value="">
+              All categories
+            </option>
+
+            <option value="Real Stories">
+              Real Stories
+            </option>
+
+            <option value="Fiction">
+              Fiction
+            </option>
+
+            <option value="Inspiration">
+              Inspiration
+            </option>
+
+            <option value="Reflections">
+              Reflections
+            </option>
+
+          </select>
 
         </div>
 
+      </div>
 
-        <form onsubmit="subscribe(event)">
+    </section>
 
-          <input
-            type="email"
-            placeholder="Your email address"
-            required
-          >
 
-          <button class="btn">
-            Subscribe
-          </button>
 
-          <small id="message"></small>
+    <!-- =========================
+         STORIES
+    ========================== -->
 
-        </form>
+    <section class="section">
+
+      <div class="container">
+
+        <div
+          id="results"
+          class="cards"
+        ></div>
 
       </div>
 
@@ -97,172 +174,443 @@
   </main>
 
 
-  <!-- FOOTER -->
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
     <div class="container footer">
 
+
       <div>
 
-        <a class="logo light" href="index.html">
+        <a
+          class="logo light"
+          href="index.html"
+        >
           The <span>Winning</span> Circle
         </a>
 
+
         <p>
-          Stories that entertain. Stories that inspire.
+          Stories that entertain.
+          Stories that inspire.
         </p>
 
       </div>
+
 
 
       <div>
 
-        <b>Follow</b>
+        <b>
+          Follow
+        </b>
+
 
         <p>
-          <a href="#">Instagram</a>
+
+          <a href="#">
+            Instagram
+          </a>
+
           ·
-          <a href="#">YouTube</a>
+
+          <a href="#">
+            YouTube
+          </a>
+
           ·
-          <a href="#">TikTok</a>
+
+          <a href="#">
+            TikTok
+          </a>
+
         </p>
 
       </div>
+
 
     </div>
 
   </footer>
 
 
-  <!-- LOAD STORIES -->
+
+  <!-- =========================
+       STORIES DATA
+  ========================== -->
+
   <script src="stories.js"></script>
 
 
-  <!-- DISPLAY SELECTED STORY -->
+
+  <!-- =========================
+       PAGE SCRIPT
+  ========================== -->
+
   <script>
 
-    STORIES_READY.then(() => {
+
+    /*
+     * Read category from the URL.
+     *
+     * Example:
+     *
+     * stories.html?category=Fiction
+     */
+
+    const params =
+      new URLSearchParams(location.search);
+
+
+    const categorySelect =
+      document.getElementById("category");
+
+
+    categorySelect.value =
+      params.get("category") || "";
+
+
+
+    /*
+     * Display stories.
+     */
+
+    function render() {
+
+
+      const searchInput =
+        document.getElementById("search");
+
+
+      const searchTerm =
+        searchInput.value
+          .toLowerCase()
+          .trim();
+
+
+      const selectedCategory =
+        categorySelect.value;
+
+
 
       /*
-       * Get the story ID from the URL.
+       * Filter stories.
+       */
+
+      const data =
+        STORIES.filter(story => {
+
+
+          const matchesCategory =
+            !selectedCategory ||
+            story.category === selectedCategory;
+
+
+          const searchableText =
+            (
+              story.title +
+              " " +
+              story.author +
+              " " +
+              story.excerpt +
+              " " +
+              story.category
+            ).toLowerCase();
+
+
+          const matchesSearch =
+            !searchTerm ||
+            searchableText.includes(searchTerm);
+
+
+          return (
+            matchesCategory &&
+            matchesSearch
+          );
+
+        });
+
+
+
+      /*
+       * Display the results.
+       */
+
+      const results =
+        document.getElementById("results");
+
+
+
+      if (!data.length) {
+
+        results.innerHTML = `
+          <div class="empty">
+
+            <h3>
+              No stories found.
+            </h3>
+
+            <p>
+              Try another search or category.
+            </p>
+
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+
+      /*
+       * Create story cards.
+       */
+
+      results.innerHTML =
+        data
+          .map(card)
+          .join("");
+
+    }
+
+
+
+    /*
+     * Create an individual story card.
+     */
+
+    function card(story) {
+
+
+      let coverHTML;
+
+
+
+      /*
+       * CMS uploaded image.
        *
        * Example:
-       * story.html?id=my-first-story
+       * /images/uploads/my-cover.jpg
        */
 
-      const id =
-        new URLSearchParams(location.search).get("id");
+      if (
+        story.cover &&
+        (
+          story.cover.startsWith("/") ||
+          story.cover.startsWith("http")
+        )
+      ) {
 
+        coverHTML = `
 
-      /*
-       * Find the requested story.
-       */
+          <div class="cover image-cover">
 
-      const s =
-        STORIES.find(x => x.id === id) || STORIES[0];
+            <img
+              src="${story.cover}"
+              alt="${story.title}"
+              loading="lazy"
+            >
 
-
-      /*
-       * Update the browser title.
-       */
-
-      document.title =
-        s.title + " | The Winning Circle";
-
-
-      /*
-       * Display the story.
-       */
-
-      document.getElementById("article").innerHTML = `
-
-        <div class="container articlehead">
-
-          <p class="tag">
-            ${s.category}
-          </p>
-
-
-          <h1>
-            ${s.title}
-          </h1>
-
-
-          <p class="dek">
-            ${s.excerpt}
-          </p>
-
-
-          <div class="byline">
-            By <b>${s.author}</b> · ${s.date}
-          </div>
-
-
-          ${
-  s.cover
-    ? (
-        s.cover.startsWith("/")
-          ? `
-            <div class="cover large image-cover">
-              <img src="${s.cover}" alt="${s.title}">
-              <span>${s.number}</span>
-            </div>
-          `
-          : `
-            <div class="cover large ${s.cover}">
-              <span>${s.number}</span>
-            </div>
-          `
-      )
-    : ""
-}
-
-        </div>
-
-
-        <div class="container articlebody">
-
-          ${s.body}
-
-
-          <div class="share">
-
-            <b>
-              Share this story
-            </b>
-
-            <a href="#">
-              Instagram
-            </a>
-
-            <a href="#">
-              Facebook
-            </a>
-
-            <a href="#">
-              WhatsApp
-            </a>
+            <span>
+              ${story.number}
+            </span>
 
           </div>
 
+        `;
 
-          <a class="read" href="stories.html">
-            ← Back to stories
+      }
+
+
+      /*
+       * Existing website cover.
+       *
+       * Example:
+       * cover-one
+       */
+
+      else if (story.cover) {
+
+        coverHTML = `
+
+          <div class="cover ${story.cover}">
+
+            <span>
+              ${story.number}
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+      /*
+       * No cover image.
+       */
+
+      else {
+
+        coverHTML = `
+
+          <div class="cover">
+
+            <span>
+              ${story.number}
+            </span>
+
+          </div>
+
+        `;
+
+      }
+
+
+
+      /*
+       * Return complete card.
+       */
+
+      return `
+
+        <article class="card">
+
+
+          <a
+            href="story.html?id=${story.id}"
+          >
+
+            ${coverHTML}
+
           </a>
 
-        </div>
+
+
+          <div class="cardbody">
+
+
+            <p class="tag">
+              ${story.category}
+            </p>
+
+
+
+            <h2>
+              ${story.title}
+            </h2>
+
+
+
+            <p>
+              ${story.excerpt}
+            </p>
+
+
+
+            <small>
+              By ${story.author}
+              ·
+              ${story.date}
+            </small>
+
+
+
+            <a
+              class="read"
+              href="story.html?id=${story.id}"
+            >
+              Read story →
+            </a>
+
+
+          </div>
+
+
+        </article>
 
       `;
 
-    });
+    }
+
+
+
+    /*
+     * Search.
+     */
+
+    document
+      .getElementById("search")
+      .addEventListener(
+        "input",
+        render
+      );
+
+
+
+    /*
+     * Category filter.
+     */
+
+    document
+      .getElementById("category")
+      .addEventListener(
+        "change",
+        render
+      );
+
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Render the original stories immediately.
+     *
+     * This means the page will not be blank
+     * while GitHub/CMS stories are loading.
+     */
+
+    render();
+
+
+
+    /*
+     * Then load the CMS stories.
+     *
+     * When stories.js finishes loading the
+     * stories from GitHub, render again.
+     */
+
+    if (
+      typeof STORIES_READY !== "undefined"
+    ) {
+
+      STORIES_READY
+        .then(() => {
+
+          render();
+
+        })
+        .catch(error => {
+
+          console.error(
+            "CMS stories could not be loaded:",
+            error
+          );
+
+        });
+
+    }
+
 
   </script>
 
 
 </body>
+
 </html>
-
- 
-     
-
-    
