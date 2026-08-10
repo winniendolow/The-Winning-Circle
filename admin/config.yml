@@ -12,6 +12,7 @@ collections:
     folder: "content/stories"
     create: true
     slug: "{{slug}}"
+
     fields:
       - label: "Title"
         name: "title"
@@ -38,6 +39,7 @@ collections:
         name: "cover"
         widget: "image"
         required: false
+        choose_url: false
 
       - label: "Excerpt"
         name: "excerpt"
@@ -45,4 +47,4 @@ collections:
 
       - label: "Story"
         name: "body"
-        widget: "markdown"  
+        widget: "markdown"
