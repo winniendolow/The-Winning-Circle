@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: winniendolow/The-Winning-Circle
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "stories"
+    label: "Stories"
+    folder: "content/stories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+      - label: "Author"
+        name: "author"
+        widget: "string"
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Real Stories"
+          - "Fiction"
+          - "Inspiration"
+          - "Reflections"
+
+      - label: "Publication Date"
+        name: "date"
+        widget: "datetime"
+
+      - label: "Cover Image"
+        name: "cover"
+        widget: "image"
+        required: false
+
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+
+      - label: "Story"
+        name: "body"
+        widget: "markdown"
