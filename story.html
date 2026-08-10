@@ -2,56 +2,113 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
 
   <title>Story | The Winning Circle</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
     rel="stylesheet"
   >
+
 </head>
+
 
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
   <header>
+
     <div class="container nav">
 
-      <a class="logo" href="index.html">
+      <a
+        class="logo"
+        href="index.html"
+      >
         The <span>Winning</span> Circle
       </a>
 
-      <button class="menu">☰</button>
+
+      <button class="menu">
+        ☰
+      </button>
+
 
       <nav>
-        <a href="index.html">Home</a>
-        <a href="stories.html">Stories</a>
-        <a href="about.html">About</a>
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="stories.html">
+          Stories
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
       </nav>
 
+
       <div class="social">
-        <a href="#">IG</a>
-        <a href="#">YT</a>
-        <a href="#">TT</a>
+
+        <a href="#">
+          IG
+        </a>
+
+        <a href="#">
+          YT
+        </a>
+
+        <a href="#">
+          TT
+        </a>
+
       </div>
 
     </div>
+
   </header>
 
 
-  <!-- MAIN STORY -->
+
+  <!-- =========================
+       STORY
+  ========================== -->
+
   <main>
 
-    <article id="article" class="article">
-      <!-- Story will be loaded here -->
+    <article
+      id="article"
+      class="article"
+    >
+
+      <!-- Story will load here -->
+
     </article>
 
 
-    <!-- NEWSLETTER -->
+
+    <!-- =========================
+         NEWSLETTER
+    ========================== -->
+
     <section class="newsletter">
 
       <div class="container newsletterbox">
@@ -96,61 +153,99 @@
   </main>
 
 
-  <!-- FOOTER -->
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
     <div class="container footer">
 
+
       <div>
 
-        <a class="logo light" href="index.html">
+        <a
+          class="logo light"
+          href="index.html"
+        >
           The <span>Winning</span> Circle
         </a>
 
+
         <p>
-          Stories that entertain. Stories that inspire.
+          Stories that entertain.
+          Stories that inspire.
         </p>
 
       </div>
+
 
 
       <div>
 
-        <b>Follow</b>
+        <b>
+          Follow
+        </b>
+
 
         <p>
-          <a href="#">Instagram</a>
+
+          <a href="#">
+            Instagram
+          </a>
+
           ·
-          <a href="#">YouTube</a>
+
+          <a href="#">
+            YouTube
+          </a>
+
           ·
-          <a href="#">TikTok</a>
+
+          <a href="#">
+            TikTok
+          </a>
+
         </p>
 
       </div>
+
 
     </div>
 
   </footer>
 
 
-  <!-- LOAD STORIES -->
+
+  <!-- =========================
+       LOAD STORIES
+  ========================== -->
+
   <script src="stories.js"></script>
 
 
-  <!-- DISPLAY STORY -->
+
+  <!-- =========================
+       DISPLAY STORY
+  ========================== -->
+
   <script>
 
     STORIES_READY.then(() => {
+
 
       /*
        * Get the story ID from the URL.
        *
        * Example:
-       * story.html?id=not-behind
+       *
+       * story.html?id=a-test-story-with-a-cover
        */
 
       const id =
         new URLSearchParams(location.search).get("id");
+
 
 
       /*
@@ -161,9 +256,26 @@
         STORIES.find(item => item.id === id);
 
 
+
+      /*
+       * Clean invisible Unicode characters
+       * that can sometimes appear in uploaded
+       * image filenames.
+       */
+
+      const cleanCover =
+        story && story.cover
+          ? story.cover.replace(
+              /[\u200B-\u200D\uFEFF\u202A-\u202E]/g,
+              ""
+            )
+          : "";
+
+
+
       /*
        * If no story was found,
-       * show a helpful message.
+       * display an error message.
        */
 
       if (!story) {
@@ -180,7 +292,10 @@
               Sorry, we couldn't find this story.
             </p>
 
-            <a class="read" href="stories.html">
+            <a
+              class="read"
+              href="stories.html"
+            >
               ← Back to stories
             </a>
 
@@ -189,7 +304,9 @@
         `;
 
         return;
+
       }
+
 
 
       /*
@@ -197,35 +314,42 @@
        */
 
       document.title =
-        story.title + " | The Winning Circle";
+        story.title +
+        " | The Winning Circle";
+
 
 
       /*
-       * Determine which type of cover we have.
-       *
-       * CMS images look like:
-       * /images/uploads/example.jpg
-       *
-       * Original covers look like:
-       * cover-one
+       * Create cover image.
        */
 
       let coverHTML = "";
 
 
-      if (story.cover) {
+
+      /*
+       * CMS uploaded image.
+       *
+       * Example:
+       *
+       * /images/uploads/photo.jpg
+       */
+
+      if (cleanCover) {
+
 
         if (
-          story.cover.startsWith("/") ||
-          story.cover.startsWith("http")
+          cleanCover.startsWith("/") ||
+          cleanCover.startsWith("http")
         ) {
+
 
           coverHTML = `
 
             <div class="cover large image-cover">
 
               <img
-                src="${story.cover}"
+                src="${cleanCover}"
                 alt="${story.title}"
               >
 
@@ -237,11 +361,24 @@
 
           `;
 
-        } else {
+
+        }
+
+
+        /*
+         * Existing website covers.
+         *
+         * Example:
+         *
+         * cover-one
+         */
+
+        else {
+
 
           coverHTML = `
 
-            <div class="cover large ${story.cover}">
+            <div class="cover large ${cleanCover}">
 
               <span>
                 ${story.number}
@@ -256,17 +393,21 @@
       }
 
 
+
       /*
-       * Display the complete story.
+       * Display complete story.
        */
 
       document.getElementById("article").innerHTML = `
 
+
         <div class="container articlehead">
+
 
           <p class="tag">
             ${story.category}
           </p>
+
 
 
           <h1>
@@ -274,28 +415,40 @@
           </h1>
 
 
+
           <p class="dek">
             ${story.excerpt}
           </p>
 
 
+
           <div class="byline">
 
-            By <b>${story.author}</b>
+            By
+            <b>
+              ${story.author}
+            </b>
+
             ·
+
             ${story.date}
 
           </div>
 
 
+
           ${coverHTML}
+
 
         </div>
 
 
+
         <div class="container articlebody">
 
+
           ${story.body}
+
 
 
           <div class="share">
@@ -304,19 +457,23 @@
               Share this story
             </b>
 
+
             <a href="#">
               Instagram
             </a>
 
+
             <a href="#">
               Facebook
             </a>
+
 
             <a href="#">
               WhatsApp
             </a>
 
           </div>
+
 
 
           <a
@@ -326,7 +483,9 @@
             ← Back to stories
           </a>
 
+
         </div>
+
 
       `;
 
